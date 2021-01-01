@@ -110,17 +110,23 @@ class Image:
 
         return copy
 
-    def threshold(self, thresh, high=255, low=0):
-        """
-        only in grayscale.
+    def threshold(self, threshold, high=255, low=0):
+        """Executes threshold processing.
+
+        This process can only be done with grayscale images.
+
+        Args:
+            threshold (int): The threshold. 0 <= threshold <= 255.
+            high (int, optional): This is set if the pixcel value is greater than the threshold. 0 <= high <= 255.
+            low (int, optional): This is set if the pixcel value is less than or equal to the threshold. 0 <= low <= 255.
         """
         output_image = self.copy()
 
         for i in range(0, self._height):
             for j in range(0, self._width):
-                if self._image[i, j] <= thresh:
-                    output_image[i, j] = high
-                else:
+                if self._image[i, j] <= threshold:
                     output_image[i, j] = low
+                else:
+                    output_image[i, j] = high
 
         return output_image

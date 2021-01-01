@@ -1,6 +1,8 @@
 import unittest
+import os
 import ImageProcessing as ip
 
+IMG_DIR = '../img'
 COLOR_IMAGE_PATH = '../../SIDBA/Color/Lenna.bmp'
 COLOR_IMAGE_HEIGHT = 256
 COLOR_IMAGE_WIDTH = 256
@@ -84,10 +86,14 @@ class TestImage_save(unittest.TestCase):
     """Tests Image.save
     """
 
+    def setUp(self):
+        if not os.path.exists(IMG_DIR):
+            os.mkdir(IMG_DIR)
+
     def testNormal(self):
         image =  ip.Image(COLOR_IMAGE_PATH)
 
-        image.save('../img/TestImage_save_testNormal.bmp')
+        image.save(IMG_DIR + '/TestImage_save_testNormal.bmp')
 
 class TestImage_copy(unittest.TestCase):
     """Tests Image.copy
@@ -112,3 +118,18 @@ class TestImage_copy(unittest.TestCase):
         self.assertEqual(image._image_path, copy._image_path)
         self.assertEqual(image._height, copy._height)
         self.assertEqual(image._width, copy._width)
+
+class TestImage_threshold(unittest.TestCase):
+    """Tests Image.threshold
+    """
+
+    def setUp(self):
+        if not os.path.exists(IMG_DIR):
+            os.mkdir(IMG_DIR)
+
+    def testNormal(self):
+        image = ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
+
+        output_image = image.threshold(100)
+
+        output_image.save(IMG_DIR + '/TestImage_threshold_testNormal.bmp')
