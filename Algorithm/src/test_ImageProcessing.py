@@ -79,3 +79,27 @@ class TestImage_open(unittest.TestCase):
         self.assertEqual(GRAYSCALE_IMAGE_PATH, image._image_path)
         self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
         self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
+
+class TestImage_copy(unittest.TestCase):
+    """Tests Image.copy
+    """
+
+    def testColorImage(self):
+        image = ip.Image(COLOR_IMAGE_PATH)
+
+        copy = image.copy()
+
+        self.assertNotEqual(id(image._image), id(copy._image))
+        self.assertEqual(image._image_path, copy._image_path)
+        self.assertEqual(image._height, copy._height)
+        self.assertEqual(image._width, copy._width)
+
+    def testGrayscaleImage(self):
+        image = ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
+
+        copy = image.copy()
+
+        self.assertNotEqual(id(image._image), id(copy._image))
+        self.assertEqual(image._image_path, copy._image_path)
+        self.assertEqual(image._height, copy._height)
+        self.assertEqual(image._width, copy._width)
