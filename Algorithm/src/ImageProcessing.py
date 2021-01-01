@@ -83,7 +83,8 @@ class Image:
         else:
             self._image = np.array(im.open(path))
         self._image_path = path
-        self._height, self._width, _ = self._image.shape
+        self._height = self._image.shape[0]
+        self._width = self._image.shape[1]
 
     def copy(self):
         """Copies the Image object.
