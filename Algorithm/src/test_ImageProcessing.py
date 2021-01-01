@@ -80,6 +80,15 @@ class TestImage_open(unittest.TestCase):
         self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
         self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
 
+class TestImage_save(unittest.TestCase):
+    """Tests Image.save
+    """
+
+    def testNormal(self):
+        image =  ip.Image(COLOR_IMAGE_PATH)
+
+        image.save('../img/TestImage_save_testNormal.bmp')
+
 class TestImage_copy(unittest.TestCase):
     """Tests Image.copy
     """

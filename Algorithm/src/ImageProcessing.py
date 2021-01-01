@@ -86,6 +86,14 @@ class Image:
         self._height = self._image.shape[0]
         self._width = self._image.shape[1]
 
+    def save(self, path):
+        """Saves the image in the specified path.
+
+        Args:
+            path (string): The path to save the image.
+        """
+        im.fromarray(self._image).save(path)
+
     def copy(self):
         """Copies the Image object.
 
