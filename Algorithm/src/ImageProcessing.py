@@ -119,6 +119,9 @@ class Image:
             threshold (int): The threshold. 0 <= threshold <= 255.
             high (int, optional): This is set if the pixcel value is greater than the threshold. 0 <= high <= 255.
             low (int, optional): This is set if the pixcel value is less than or equal to the threshold. 0 <= low <= 255.
+
+        Returns:
+            Image: Returns the image executed threshold processing.
         """
         output_image = self.copy()
 
