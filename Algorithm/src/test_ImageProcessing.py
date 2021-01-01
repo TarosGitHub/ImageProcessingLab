@@ -55,3 +55,27 @@ class TestImage_getitem_setitem(unittest.TestCase):
         image[0, 0] = 99
 
         self.assertEqual(99, image[0, 0])
+
+class TestImage_open(unittest.TestCase):
+    """Tests Image.open
+    """
+
+    def testColorImage(self):
+        image = ip.Image()
+
+        image.open(COLOR_IMAGE_PATH)
+
+        self.assertIsNotNone(image._image)
+        self.assertEqual(COLOR_IMAGE_PATH, image._image_path)
+        self.assertEqual(COLOR_IMAGE_HEIGHT, image._height)
+        self.assertEqual(COLOR_IMAGE_WIDTH, image._width)
+
+    def testGrayscaleImage(self):
+        image = ip.Image()
+
+        image.open(GRAYSCALE_IMAGE_PATH, grayscale=True)
+
+        self.assertIsNotNone(image._image)
+        self.assertEqual(GRAYSCALE_IMAGE_PATH, image._image_path)
+        self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
+        self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
