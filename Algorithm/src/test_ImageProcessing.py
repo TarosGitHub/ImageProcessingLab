@@ -1,23 +1,57 @@
 import unittest
 import ImageProcessing as ip
 
-class TestImageProcessing_init(unittest.TestCase):
+COLOR_IMAGE_PATH = '../../SIDBA/Color/Lenna.bmp'
+COLOR_IMAGE_HEIGHT = 256
+COLOR_IMAGE_WIDTH = 256
+GRAYSCALE_IMAGE_PATH = '../../SIDBA/Mono/LENNA.bmp'
+GRAYSCALE_IMAGE_HEIGHT = 256
+GRAYSCALE_IMAGE_WIDTH = 256
 
-    def test_no_argument(self):
+class TestImage_init(unittest.TestCase):
+    """Tests Image.__init__
+    """
+
+    def testNoArgument(self):
         image = ip.Image()
 
-    def test_path(self):
-        path = '../../SIDBA/Color/Lenna.bmp'
-        image = ip.Image(path)
+        self.assertEqual(None, image._image)
+        self.assertEqual('', image._image_path)
+        self.assertEqual(0, image._height)
+        self.assertEqual(0, image._width)
+
+    def testColorImage(self):
+        image = ip.Image(COLOR_IMAGE_PATH)
+
         self.assertIsNotNone(image._image)
-        self.assertEqual(path, image._image_path)
+        self.assertEqual(COLOR_IMAGE_PATH, image._image_path)
+        self.assertEqual(COLOR_IMAGE_HEIGHT, image._height)
+        self.assertEqual(COLOR_IMAGE_WIDTH, image._width)
 
-class TestImageProcessing_getitem(unittest.TestCase):
+    def testGrayscaleImage(self):
+        image = ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
 
-    def test_normal(self):
-        path = '../../SIDBA/Color/Lenna.bmp'
-        image = ip.Image(path)
-        image[0, 0] = [99, 98, 97]
+        self.assertIsNotNone(image._image)
+        self.assertEqual(GRAYSCALE_IMAGE_PATH, image._image_path)
+        self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
+        self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
+
+class TestImage_getitem_setitem(unittest.TestCase):
+    """Tests Image.__getitem__, __setitem__
+    """
+
+    def testColorImage(self):
+        image = ip.Image(COLOR_IMAGE_PATH)
+        image[0, 0, 0] = 99
+        image[0, 0, 1] = 98
+        image[0, 0, 2] = 97
+
         self.assertEqual(99, image[0, 0, 0])
         self.assertEqual(98, image[0, 0, 1])
         self.assertEqual(97, image[0, 0, 2])
+
+    def testGrayscaleImage(self):
+        image = ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
+        image[0, 0] = 99
+
+        self.assertEqual(99, image[0, 0])
