@@ -71,6 +71,18 @@ class Image:
         """
         self._image[index] = value
 
+    @property
+    def width(self):
+        """Gets the width of the image.
+        """
+        return self._width
+
+    @property
+    def height(self):
+        """Gets the height of the image.
+        """
+        return self._height
+
     def open(self, path, grayscale=False):
         """Opens the image file specifyed by the argument of path.
 

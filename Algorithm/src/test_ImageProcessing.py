@@ -58,6 +58,24 @@ class TestImage_getitem_setitem(unittest.TestCase):
 
         self.assertEqual(99, image[0, 0])
 
+class TestImage_width(unittest.TestCase):
+    """Tests Image.width
+    """
+
+    def testGetsWidth(self):
+        image = ip.Image(COLOR_IMAGE_PATH)
+
+        self.assertEqual(256, image.width)
+
+class TestImage_height(unittest.TestCase):
+    """Tests Image.height
+    """
+
+    def testGetsHeight(self):
+        image = ip.Image(COLOR_IMAGE_PATH)
+
+        self.assertEqual(256, image.height)
+
 class TestImage_open(unittest.TestCase):
     """Tests Image.open
     """
