@@ -1,12 +1,12 @@
 from abc import ABCMeta, abstractmethod
 import math
-import ImageProcessing as ip
 
 class EdgeDetector(metaclass=ABCMeta):
     """The edge detection class.
 
     This class is implemented with the Strategy pattern.
     """
+    __slots__ = ()
 
     @abstractmethod
     def detect(self, image):
@@ -74,18 +74,38 @@ class GradientEdgeDetector(EdgeDetector):
         """
         MAX_PIXEL_VALUE = 255
         output_image = image.copy()
+        output_image[:, :] = MAX_PIXEL_VALUE # TODO: 白画像の生成はImageクラスのコンストラクタでできるようにした方が良い
 
         for i in range(1, image.height - 1):
             for j in range(1, image.width - 1):
-                fx = float(self._d_ope_x[0, 0] * image[i - 1, j - 1] + self._d_ope_x[0, 1] * image[i - 1, j] + self._d_ope_x[0, 2] * image[i - 1, j + 1]
-                           + self._d_ope_x[1, 0] * image[i, j - 1] + self._d_ope_x[1, 1] * image[i, j] + self._d_ope_x[1, 2] * image[i, j + 1]
-                           + self._d_ope_x[2, 0] * image[i + 1, j - 1] + self._d_ope_x[2, 1] * image[i + 1, j] + self._d_ope_x[2, 2] * image[i + 1, j + 1])
-                fy = float(self._d_ope_y[0, 0] * image[i - 1, j - 1] + self._d_ope_y[0, 1] * image[i - 1, j] + self._d_ope_y[0, 2] * image[i - 1, j + 1]
-                           + self._d_ope_y[1, 0] * image[i, j - 1] + self._d_ope_y[1, 1] * image[i, j] + self._d_ope_y[1, 2] * image[i, j + 1]
-                           + self._d_ope_y[2, 0] * image[i + 1, j - 1] + self._d_ope_y[2, 1] * image[i + 1, j] + self._d_ope_y[2, 2] * image[i + 1, j + 1])
+                fx = float(self._d_ope_x[0][0] * image[i - 1, j - 1] + self._d_ope_x[0][1] * image[i - 1, j] + self._d_ope_x[0][2] * image[i - 1, j + 1]
+                           + self._d_ope_x[1][0] * image[i, j - 1] + self._d_ope_x[1][1] * image[i, j] + self._d_ope_x[1][2] * image[i, j + 1]
+                           + self._d_ope_x[2][0] * image[i + 1, j - 1] + self._d_ope_x[2][1] * image[i + 1, j] + self._d_ope_x[2][2] * image[i + 1, j + 1])
+                fy = float(self._d_ope_y[0][0] * image[i - 1, j - 1] + self._d_ope_y[0][1] * image[i - 1, j] + self._d_ope_y[0][2] * image[i - 1, j + 1]
+                           + self._d_ope_y[1][0] * image[i, j - 1] + self._d_ope_y[1][1] * image[i, j] + self._d_ope_y[1][2] * image[i, j + 1]
+                           + self._d_ope_y[2][0] * image[i + 1, j - 1] + self._d_ope_y[2][1] * image[i + 1, j] + self._d_ope_y[2][2] * image[i + 1, j + 1])
                 strength = self._amplifier * math.sqrt(fx * fx + fy * fy)
 
                 pixel_value = int(strength)
                 output_image[i, j] = pixel_value if MAX_PIXEL_VALUE < pixel_value else MAX_PIXEL_VALUE
 
         return output_image
+
+class GradientDifferenceEdgeDetector(GradientEdgeDetector):
+    """The gradient difference edge detection class.
+    """
+    __slots__ = ('_difference_d_ope_x', '_difference_d_ope_y')
+
+    def __init__(self, amplifier=4.0):
+        """Initializes GradientDifferenceEdgeDetector class: The GradientDifferenceEdgeDetector class constructor.
+
+        Args:
+            amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
+        """
+        self._difference_d_ope_x = [[0, 0, 0],
+                                    [0, -1, 1],
+                                    [0, 0, 0]]
+        self._difference_d_ope_y = [[0, 0, 0],
+                                    [0, -1, 0],
+                                    [0, 1, 0]]
+        super().__init__(self._difference_d_ope_x, self._difference_d_ope_y, amplifier)
