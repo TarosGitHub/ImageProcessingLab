@@ -6,7 +6,6 @@ class EdgeDetector(metaclass=ABCMeta):
 
     This class is implemented with the Strategy pattern.
     """
-    __slots__ = ()
 
     @abstractmethod
     def detect(self, image):
@@ -28,7 +27,6 @@ class GradientEdgeDetector(EdgeDetector):
         _d_ope_y (list[3, 3]): The derivative operator in the y direction.
         _amplifier (double):　The tone adjustment factor.
     """
-    __slots__ = ('_d_ope_x', '_d_ope_y', '_amplifier')
 
     def __init__(self, d_ope_x, d_ope_y, amplifier=4.0):
         """Initializes GradientEdgeDetector class: The GradientEdgeDetector class constructor.
@@ -94,7 +92,6 @@ class GradientEdgeDetector(EdgeDetector):
 class GradientDifferenceEdgeDetector(GradientEdgeDetector):
     """The gradient difference edge detection class.
     """
-    __slots__ = ('_difference_d_ope_x', '_difference_d_ope_y')
 
     def __init__(self, amplifier=4.0):
         """Initializes GradientDifferenceEdgeDetector class: The GradientDifferenceEdgeDetector class constructor.

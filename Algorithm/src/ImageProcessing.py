@@ -26,7 +26,6 @@ class Image:
         The side O-y is the height of the image.
         The side O-z is the RGB array of the pixel specifyed by x and y: [R, G, B]. In case grayscale images, the argument doesn't exist.
     """
-    __slots__ = ('_image', '_image_path', '_width', '_height')
 
     def __init__(self, path='', grayscale=False):
         """Initializes Image class: The Image class constructor.
