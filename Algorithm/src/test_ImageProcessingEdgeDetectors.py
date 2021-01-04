@@ -53,3 +53,19 @@ class TestGradientRobertsEdgeDetector_detect(unittest.TestCase):
         output_image = edge_detector.detect(image)
 
         output_image.save(IMG_DIR + '/TestGradientRobertsEdgeDetector_detect_testNormal.bmp')
+
+class TestGradientSobelEdgeDetector_detect(unittest.TestCase):
+    """Tests GradientSobelEdgeDetector.detect
+    """
+
+    def setUp(self):
+        if not os.path.exists(IMG_DIR):
+            os.mkdir(IMG_DIR)
+
+    def testNormal(self):
+        image =  ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
+        edge_detector = ed.GradientSobelEdgeDetector()
+
+        output_image = edge_detector.detect(image)
+
+        output_image.save(IMG_DIR + '/TestGradientSobelEdgeDetector_detect_testNormal.bmp')

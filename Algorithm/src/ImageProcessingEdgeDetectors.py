@@ -124,3 +124,21 @@ class GradientRobertsEdgeDetector(GradientEdgeDetector):
                                  [0, 0, -1],
                                  [0, 1, 0]]
         super().__init__(self._roberts_d_ope_x, self._roberts_d_ope_y, amplifier)
+
+class GradientSobelEdgeDetector(GradientEdgeDetector):
+    """The gradient Sobel edge detection class.
+    """
+
+    def __init__(self, amplifier=4.0):
+        """Initializes GradientSobelEdgeDetector class: The GradientSobelEdgeDetector class constructor.
+
+        Args:
+            amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
+        """
+        self._sobel_d_ope_x = [[-1, 0, 1],
+                               [-2, 0, 2],
+                               [-1, 0, 1]]
+        self._sobel_d_ope_y = [[-1, -2, -1],
+                               [0, 0, 0],
+                               [1, 2, 1]]
+        super().__init__(self._sobel_d_ope_x, self._sobel_d_ope_y, amplifier)
