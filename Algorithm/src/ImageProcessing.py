@@ -6,7 +6,6 @@ class Image:
 
     Attributes:
         _image (numpy.ndarray): The image data.
-        _image_path (string): The path to the image file.
         _width (int): The width of the image.
         _height (int): The height of the image.
 
@@ -39,7 +38,6 @@ class Image:
             grayscale (bool, optional): Opens the image file in grayscale.
         """
         self._image = None
-        self._image_path = ''
         self._height = 0
         self._width = 0
 
@@ -51,7 +49,6 @@ class Image:
                 # TODO: 黒画像などにも対応する(最後の* 255の部分) → 黒画像の場合には np.zeros((256, 256), np.uint8)
                 # 白画像を作成する
                 self._image = np.ones((height, width), np.uint8) * 255
-                self._image_path = ''
                 self._height = self._image.shape[0]
                 self._width = self._image.shape[1]
 
@@ -106,7 +103,6 @@ class Image:
             self._image = np.array(im.open(path).convert('L'))
         else:
             self._image = np.array(im.open(path))
-        self._image_path = path
         self._height = self._image.shape[0]
         self._width = self._image.shape[1]
 
@@ -128,7 +124,6 @@ class Image:
         """
         copy = Image()
         copy._image = self._image.copy()
-        copy._image_path = self._image_path
         copy._height = self._height
         copy._width = self._width
 

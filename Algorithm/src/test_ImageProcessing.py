@@ -18,7 +18,6 @@ class TestImage_init(unittest.TestCase):
         image = ip.Image()
 
         self.assertEqual(None, image._image)
-        self.assertEqual('', image._image_path)
         self.assertEqual(0, image._height)
         self.assertEqual(0, image._width)
 
@@ -26,7 +25,6 @@ class TestImage_init(unittest.TestCase):
         image = ip.Image(COLOR_IMAGE_PATH)
 
         self.assertIsNotNone(image._image)
-        self.assertEqual(COLOR_IMAGE_PATH, image._image_path)
         self.assertEqual(COLOR_IMAGE_HEIGHT, image._height)
         self.assertEqual(COLOR_IMAGE_WIDTH, image._width)
 
@@ -34,7 +32,6 @@ class TestImage_init(unittest.TestCase):
         image = ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
 
         self.assertIsNotNone(image._image)
-        self.assertEqual(GRAYSCALE_IMAGE_PATH, image._image_path)
         self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
         self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
 
@@ -44,7 +41,6 @@ class TestImage_init(unittest.TestCase):
         image = ip.Image(height=HEIGHT, width=WIDTH, grayscale=True)
 
         self.assertIsNotNone(image._image)
-        self.assertEqual('', image._image_path)
         self.assertEqual(HEIGHT, image._height)
         self.assertEqual(WIDTH, image._width)
         # image.save(IMG_DIR + '/TestImage_init_testWhiteImage.bmp')
@@ -97,7 +93,6 @@ class TestImage_open(unittest.TestCase):
         image.open(COLOR_IMAGE_PATH)
 
         self.assertIsNotNone(image._image)
-        self.assertEqual(COLOR_IMAGE_PATH, image._image_path)
         self.assertEqual(COLOR_IMAGE_HEIGHT, image._height)
         self.assertEqual(COLOR_IMAGE_WIDTH, image._width)
 
@@ -107,7 +102,6 @@ class TestImage_open(unittest.TestCase):
         image.open(GRAYSCALE_IMAGE_PATH, grayscale=True)
 
         self.assertIsNotNone(image._image)
-        self.assertEqual(GRAYSCALE_IMAGE_PATH, image._image_path)
         self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
         self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
 
@@ -134,7 +128,6 @@ class TestImage_copy(unittest.TestCase):
         copy = image.copy()
 
         self.assertNotEqual(id(image._image), id(copy._image))
-        self.assertEqual(image._image_path, copy._image_path)
         self.assertEqual(image._height, copy._height)
         self.assertEqual(image._width, copy._width)
 
@@ -144,7 +137,6 @@ class TestImage_copy(unittest.TestCase):
         copy = image.copy()
 
         self.assertNotEqual(id(image._image), id(copy._image))
-        self.assertEqual(image._image_path, copy._image_path)
         self.assertEqual(image._height, copy._height)
         self.assertEqual(image._width, copy._width)
 
