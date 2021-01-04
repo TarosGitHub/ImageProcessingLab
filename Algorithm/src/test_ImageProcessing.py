@@ -38,6 +38,17 @@ class TestImage_init(unittest.TestCase):
         self.assertEqual(GRAYSCALE_IMAGE_HEIGHT, image._height)
         self.assertEqual(GRAYSCALE_IMAGE_WIDTH, image._width)
 
+    def testWhiteImage(self):
+        HEIGHT = 200
+        WIDTH = 300
+        image = ip.Image(height=HEIGHT, width=WIDTH, grayscale=True)
+
+        self.assertIsNotNone(image._image)
+        self.assertEqual('', image._image_path)
+        self.assertEqual(HEIGHT, image._height)
+        self.assertEqual(WIDTH, image._width)
+        # image.save(IMG_DIR + '/TestImage_init_testWhiteImage.bmp')
+
 class TestImage_getitem_setitem(unittest.TestCase):
     """Tests Image.__getitem__, __setitem__
     """

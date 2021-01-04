@@ -27,20 +27,33 @@ class Image:
         The side O-z is the RGB array of the pixel specifyed by x and y: [R, G, B]. In case grayscale images, the argument doesn't exist.
     """
 
-    def __init__(self, path='', grayscale=False):
+    def __init__(self, path='', height=0, width=0, grayscale=False):
         """Initializes Image class: The Image class constructor.
+
+        # TODO: pathを指定した場合はheight, widthは無視されるなどの引数のパターンは要説明
 
         Args:
             path (string, optional): The path to the image file.
+            height (int, optional): The height of the image.
+            width (int, optional): The width of the image.
             grayscale (bool, optional): Opens the image file in grayscale.
         """
         self._image = None
         self._image_path = ''
-        self._width = 0
         self._height = 0
+        self._width = 0
 
         if path:
             self.open(path, grayscale)
+        else:
+            if height != 0 and width != 0 and grayscale:
+                # TODO: RGB画像にも対応する
+                # TODO: 黒画像などにも対応する(最後の* 255の部分) → 黒画像の場合には np.zeros((256, 256), np.uint8)
+                # 白画像を作成する
+                self._image = np.ones((height, width), np.uint8) * 255
+                self._image_path = ''
+                self._height = self._image.shape[0]
+                self._width = self._image.shape[1]
 
     def __getitem__(self, index):
         """The reference operator getting image data.
