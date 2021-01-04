@@ -38,6 +38,17 @@ class TestGradientDifferenceEdgeDetector_detect(unittest.TestCase):
 
         output_image.save(IMG_DIR + '/TestGradientDifferenceEdgeDetector_detect_testNormal.bmp')
 
+class TestGradientRobertsEdgeDetector_init(unittest.TestCase):
+    """Tests GradientRobertsEdgeDetector.__init__
+    """
+
+    def testNormal(self):
+        edge_detector = ed.GradientRobertsEdgeDetector()
+
+        self.assertEqual(edge_detector._roberts_d_ope_x, edge_detector._d_ope_x)
+        self.assertEqual(edge_detector._roberts_d_ope_y, edge_detector._d_ope_y)
+        self.assertEqual(4.0, edge_detector._amplifier)
+
 class TestGradientRobertsEdgeDetector_detect(unittest.TestCase):
     """Tests GradientRobertsEdgeDetector.detect
     """
@@ -53,6 +64,17 @@ class TestGradientRobertsEdgeDetector_detect(unittest.TestCase):
         output_image = edge_detector.detect(image)
 
         output_image.save(IMG_DIR + '/TestGradientRobertsEdgeDetector_detect_testNormal.bmp')
+
+class TestGradientSobelEdgeDetector_init(unittest.TestCase):
+    """Tests GradientSobelEdgeDetector.__init__
+    """
+
+    def testNormal(self):
+        edge_detector = ed.GradientSobelEdgeDetector()
+
+        self.assertEqual(edge_detector._sobel_d_ope_x, edge_detector._d_ope_x)
+        self.assertEqual(edge_detector._sobel_d_ope_y, edge_detector._d_ope_y)
+        self.assertEqual(4.0, edge_detector._amplifier)
 
 class TestGradientSobelEdgeDetector_detect(unittest.TestCase):
     """Tests GradientSobelEdgeDetector.detect
