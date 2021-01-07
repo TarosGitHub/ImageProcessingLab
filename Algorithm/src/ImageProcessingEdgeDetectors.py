@@ -23,8 +23,9 @@ class GradientEdgeDetector(EdgeDetector):
     """The gradient edge detection class.
 
     Attributes:
-        _d_ope_x (list[3, 3]): The derivative operator in the x direction.
-        _d_ope_y (list[3, 3]): The derivative operator in the y direction.
+        TODO: _d_ope_ は変数名を _ope_にする
+        _d_ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
+        _d_ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
         _amplifier (double):　The tone adjustment factor.
     """
 
