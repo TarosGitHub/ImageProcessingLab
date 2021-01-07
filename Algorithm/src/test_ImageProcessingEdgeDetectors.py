@@ -11,19 +11,19 @@ GRAYSCALE_IMAGE_PATH = '../../SIDBA/Mono/LENNA.bmp'
 GRAYSCALE_IMAGE_HEIGHT = 256
 GRAYSCALE_IMAGE_WIDTH = 256
 
-class TestGradientDifferenceEdgeDetector_init(unittest.TestCase):
-    """Tests GradientDifferenceEdgeDetector.__init__
+class TestDifferenceEdgeDetector_init(unittest.TestCase):
+    """Tests DifferenceEdgeDetector.__init__
     """
 
     def testNormal(self):
-        edge_detector = ed.GradientDifferenceEdgeDetector()
+        edge_detector = ed.DifferenceEdgeDetector()
 
-        self.assertEqual(edge_detector._difference_d_ope_x, edge_detector._d_ope_x)
-        self.assertEqual(edge_detector._difference_d_ope_y, edge_detector._d_ope_y)
+        self.assertEqual(edge_detector._difference_ope_x, edge_detector._ope_x)
+        self.assertEqual(edge_detector._difference_ope_y, edge_detector._ope_y)
         self.assertEqual(4.0, edge_detector._amplifier)
 
-class TestGradientDifferenceEdgeDetector_detect(unittest.TestCase):
-    """Tests GradientDifferenceEdgeDetector.detect
+class TestDifferenceEdgeDetector_detect(unittest.TestCase):
+    """Tests DifferenceEdgeDetector.detect
     """
 
     def setUp(self):
@@ -32,25 +32,25 @@ class TestGradientDifferenceEdgeDetector_detect(unittest.TestCase):
 
     def testNormal(self):
         image =  ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
-        edge_detector = ed.GradientDifferenceEdgeDetector()
+        edge_detector = ed.DifferenceEdgeDetector()
 
         output_image = edge_detector.detect(image)
 
-        output_image.save(IMG_DIR + '/TestGradientDifferenceEdgeDetector_detect_testNormal.bmp')
+        output_image.save(IMG_DIR + '/TestDifferenceEdgeDetector_detect_testNormal.bmp')
 
-class TestGradientRobertsEdgeDetector_init(unittest.TestCase):
-    """Tests GradientRobertsEdgeDetector.__init__
+class TestRobertsEdgeDetector_init(unittest.TestCase):
+    """Tests RobertsEdgeDetector.__init__
     """
 
     def testNormal(self):
-        edge_detector = ed.GradientRobertsEdgeDetector()
+        edge_detector = ed.RobertsEdgeDetector()
 
-        self.assertEqual(edge_detector._roberts_d_ope_x, edge_detector._d_ope_x)
-        self.assertEqual(edge_detector._roberts_d_ope_y, edge_detector._d_ope_y)
+        self.assertEqual(edge_detector._roberts_ope_x, edge_detector._ope_x)
+        self.assertEqual(edge_detector._roberts_ope_y, edge_detector._ope_y)
         self.assertEqual(4.0, edge_detector._amplifier)
 
-class TestGradientRobertsEdgeDetector_detect(unittest.TestCase):
-    """Tests GradientRobertsEdgeDetector.detect
+class TestRobertsEdgeDetector_detect(unittest.TestCase):
+    """Tests RobertsEdgeDetector.detect
     """
 
     def setUp(self):
@@ -59,25 +59,25 @@ class TestGradientRobertsEdgeDetector_detect(unittest.TestCase):
 
     def testNormal(self):
         image =  ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
-        edge_detector = ed.GradientRobertsEdgeDetector()
+        edge_detector = ed.RobertsEdgeDetector()
 
         output_image = edge_detector.detect(image)
 
-        output_image.save(IMG_DIR + '/TestGradientRobertsEdgeDetector_detect_testNormal.bmp')
+        output_image.save(IMG_DIR + '/TestRobertsEdgeDetector_detect_testNormal.bmp')
 
-class TestGradientSobelEdgeDetector_init(unittest.TestCase):
-    """Tests GradientSobelEdgeDetector.__init__
+class TestSobelEdgeDetector_init(unittest.TestCase):
+    """Tests SobelEdgeDetector.__init__
     """
 
     def testNormal(self):
-        edge_detector = ed.GradientSobelEdgeDetector()
+        edge_detector = ed.SobelEdgeDetector()
 
-        self.assertEqual(edge_detector._sobel_d_ope_x, edge_detector._d_ope_x)
-        self.assertEqual(edge_detector._sobel_d_ope_y, edge_detector._d_ope_y)
+        self.assertEqual(edge_detector._sobel_ope_x, edge_detector._ope_x)
+        self.assertEqual(edge_detector._sobel_ope_y, edge_detector._ope_y)
         self.assertEqual(4.0, edge_detector._amplifier)
 
-class TestGradientSobelEdgeDetector_detect(unittest.TestCase):
-    """Tests GradientSobelEdgeDetector.detect
+class TestSobelEdgeDetector_detect(unittest.TestCase):
+    """Tests SobelEdgeDetector.detect
     """
 
     def setUp(self):
@@ -86,11 +86,11 @@ class TestGradientSobelEdgeDetector_detect(unittest.TestCase):
 
     def testNormal(self):
         image =  ip.Image(GRAYSCALE_IMAGE_PATH, grayscale=True)
-        edge_detector = ed.GradientSobelEdgeDetector()
+        edge_detector = ed.SobelEdgeDetector()
 
         output_image = edge_detector.detect(image)
 
-        output_image.save(IMG_DIR + '/TestGradientSobelEdgeDetector_detect_testNormal.bmp')
+        output_image.save(IMG_DIR + '/TestSobelEdgeDetector_detect_testNormal.bmp')
 
 class TestPrewittEdgeDetector_detect(unittest.TestCase):
     """Tests PrewittEdgeDetector.detect

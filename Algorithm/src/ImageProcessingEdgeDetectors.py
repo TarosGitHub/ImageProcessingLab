@@ -23,22 +23,21 @@ class GradientEdgeDetector(EdgeDetector):
     """The gradient edge detection class.
 
     Attributes:
-        TODO: _d_ope_ は変数名を _ope_にする
-        _d_ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
-        _d_ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
+        _ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
+        _ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
         _amplifier (double):　The tone adjustment factor.
     """
 
-    def __init__(self, d_ope_x, d_ope_y, amplifier=4.0):
+    def __init__(self, ope_x, ope_y, amplifier=4.0):
         """Initializes GradientEdgeDetector class: The GradientEdgeDetector class constructor.
 
         Args:
-            d_ope_x (list[3, 3]): The derivative operator in the x direction.
-            d_ope_y (list[3, 3]): The derivative operator in the y direction.
+            ope_x (list[3, 3]): The derivative operator in the x direction.
+            ope_y (list[3, 3]): The derivative operator in the y direction.
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
-        self._d_ope_x = d_ope_x
-        self._d_ope_y = d_ope_y
+        self._ope_x = ope_x
+        self._ope_y = ope_y
         self._amplifier = amplifier
 
     @property
@@ -77,12 +76,12 @@ class GradientEdgeDetector(EdgeDetector):
 
         for i in range(1, image.height - 1):
             for j in range(1, image.width - 1):
-                fx = float(self._d_ope_x[0][0] * image[i - 1, j - 1] + self._d_ope_x[0][1] * image[i - 1, j] + self._d_ope_x[0][2] * image[i - 1, j + 1]
-                           + self._d_ope_x[1][0] * image[i, j - 1] + self._d_ope_x[1][1] * image[i, j] + self._d_ope_x[1][2] * image[i, j + 1]
-                           + self._d_ope_x[2][0] * image[i + 1, j - 1] + self._d_ope_x[2][1] * image[i + 1, j] + self._d_ope_x[2][2] * image[i + 1, j + 1])
-                fy = float(self._d_ope_y[0][0] * image[i - 1, j - 1] + self._d_ope_y[0][1] * image[i - 1, j] + self._d_ope_y[0][2] * image[i - 1, j + 1]
-                           + self._d_ope_y[1][0] * image[i, j - 1] + self._d_ope_y[1][1] * image[i, j] + self._d_ope_y[1][2] * image[i, j + 1]
-                           + self._d_ope_y[2][0] * image[i + 1, j - 1] + self._d_ope_y[2][1] * image[i + 1, j] + self._d_ope_y[2][2] * image[i + 1, j + 1])
+                fx = float(self._ope_x[0][0] * image[i - 1, j - 1] + self._ope_x[0][1] * image[i - 1, j] + self._ope_x[0][2] * image[i - 1, j + 1]
+                           + self._ope_x[1][0] * image[i, j - 1] + self._ope_x[1][1] * image[i, j] + self._ope_x[1][2] * image[i, j + 1]
+                           + self._ope_x[2][0] * image[i + 1, j - 1] + self._ope_x[2][1] * image[i + 1, j] + self._ope_x[2][2] * image[i + 1, j + 1])
+                fy = float(self._ope_y[0][0] * image[i - 1, j - 1] + self._ope_y[0][1] * image[i - 1, j] + self._ope_y[0][2] * image[i - 1, j + 1]
+                           + self._ope_y[1][0] * image[i, j - 1] + self._ope_y[1][1] * image[i, j] + self._ope_y[1][2] * image[i, j + 1]
+                           + self._ope_y[2][0] * image[i + 1, j - 1] + self._ope_y[2][1] * image[i + 1, j] + self._ope_y[2][2] * image[i + 1, j + 1])
                 strength = self._amplifier * math.sqrt(fx * fx + fy * fy)
 
                 pixel_value = int(strength)
@@ -90,59 +89,71 @@ class GradientEdgeDetector(EdgeDetector):
 
         return output_image
 
-class GradientDifferenceEdgeDetector(GradientEdgeDetector):
+class DifferenceEdgeDetector(GradientEdgeDetector):
     """The gradient difference edge detection class.
+
+    Attributes:
+        _difference_ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
+        _difference_ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
     """
 
     def __init__(self, amplifier=4.0):
-        """Initializes GradientDifferenceEdgeDetector class: The GradientDifferenceEdgeDetector class constructor.
+        """Initializes DifferenceEdgeDetector class: The DifferenceEdgeDetector class constructor.
 
         Args:
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
-        self._difference_d_ope_x = [[0, 0, 0],
+        self._difference_ope_x = [[0, 0, 0],
                                     [0, -1, 1],
                                     [0, 0, 0]]
-        self._difference_d_ope_y = [[0, 0, 0],
+        self._difference_ope_y = [[0, 0, 0],
                                     [0, -1, 0],
                                     [0, 1, 0]]
-        super().__init__(self._difference_d_ope_x, self._difference_d_ope_y, amplifier)
+        super().__init__(self._difference_ope_x, self._difference_ope_y, amplifier)
 
-class GradientRobertsEdgeDetector(GradientEdgeDetector):
+class RobertsEdgeDetector(GradientEdgeDetector):
     """The gradient Roberts edge detection class.
+
+    Attributes:
+        _roberts_ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
+        _roberts_ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
     """
 
     def __init__(self, amplifier=4.0):
-        """Initializes GradientRobertsEdgeDetector class: The GradientRobertsEdgeDetector class constructor.
+        """Initializes RobertsEdgeDetector class: The RobertsEdgeDetector class constructor.
 
         Args:
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
-        self._roberts_d_ope_x = [[0, 0, 0],
+        self._roberts_ope_x = [[0, 0, 0],
                                  [0, -1, 0],
                                  [0, 0, 1]]
-        self._roberts_d_ope_y = [[0, 0, 0],
+        self._roberts_ope_y = [[0, 0, 0],
                                  [0, 0, -1],
                                  [0, 1, 0]]
-        super().__init__(self._roberts_d_ope_x, self._roberts_d_ope_y, amplifier)
+        super().__init__(self._roberts_ope_x, self._roberts_ope_y, amplifier)
 
-class GradientSobelEdgeDetector(GradientEdgeDetector):
+class SobelEdgeDetector(GradientEdgeDetector):
     """The gradient Sobel edge detection class.
+
+    Attributes:
+        _sobel_ope_x (list[list[int]]): The derivative operator in the x direction. 3x3 matrix.
+        _sobel_ope_y (list[list[int]]): The derivative operator in the y direction. 3x3 matrix.
     """
 
     def __init__(self, amplifier=4.0):
-        """Initializes GradientSobelEdgeDetector class: The GradientSobelEdgeDetector class constructor.
+        """Initializes SobelEdgeDetector class: The SobelEdgeDetector class constructor.
 
         Args:
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
-        self._sobel_d_ope_x = [[-1, 0, 1],
+        self._sobel_ope_x = [[-1, 0, 1],
                                [-2, 0, 2],
                                [-1, 0, 1]]
-        self._sobel_d_ope_y = [[-1, -2, -1],
+        self._sobel_ope_y = [[-1, -2, -1],
                                [0, 0, 0],
                                [1, 2, 1]]
-        super().__init__(self._sobel_d_ope_x, self._sobel_d_ope_y, amplifier)
+        super().__init__(self._sobel_ope_x, self._sobel_ope_y, amplifier)
 
 class TemplateMatchingEdgeDetector(EdgeDetector):
     """The template matching edge detection class.
@@ -161,6 +172,9 @@ class TemplateMatchingEdgeDetector(EdgeDetector):
 
 class PrewittEdgeDetector(TemplateMatchingEdgeDetector):
     """The Prewitt edge detection class.
+
+    Attributes:
+        _opes (list[list[list[int]]]): The derivative operator in the x direction. 8x3x3 matrix.
     """
 
     def __init__(self, amplifier=4.0):
