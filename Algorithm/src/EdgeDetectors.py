@@ -32,8 +32,8 @@ class GradientEdgeDetector(EdgeDetector):
         """Initializes GradientEdgeDetector class: The GradientEdgeDetector class constructor.
 
         Args:
-            ope_x (list[3, 3]): The derivative operator in the x direction.
-            ope_y (list[3, 3]): The derivative operator in the y direction.
+            ope_x (list[list[int]]): The derivative operator in the x direction.
+            ope_y (list[list[int]]): The derivative operator in the y direction.
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
         self._ope_x = ope_x
