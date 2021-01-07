@@ -142,3 +142,84 @@ class GradientSobelEdgeDetector(GradientEdgeDetector):
                                [0, 0, 0],
                                [1, 2, 1]]
         super().__init__(self._sobel_d_ope_x, self._sobel_d_ope_y, amplifier)
+
+class TemplateMatchingEdgeDetector(EdgeDetector):
+    """The template matching edge detection class.
+
+    Attributes:
+        _amplifier (double):　The tone adjustment factor.
+    """
+
+    def __init__(self, amplifier=4.0):
+        """Initializes TemplateMatchingEdgeDetector class: The TemplateMatchingEdgeDetector class constructor.
+
+        Args:
+            amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
+        """
+        self._amplifier = amplifier
+
+class PrewittEdgeDetector(TemplateMatchingEdgeDetector):
+    """The Prewitt edge detection class.
+    """
+
+    def __init__(self, amplifier=4.0):
+        """Initializes PrewittEdgeDetector class: The PrewittEdgeDetector class constructor.
+
+        Args:
+            amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
+        """
+        super().__init__(amplifier)
+        self._opes = [[[1, 1, 1],
+                       [1, -2, 1],
+                       [-1, -1, -1]],
+                      [[1, 1, 1],
+                       [1, -2, -1],
+                       [1, -1, -1]],
+                      [[1, 1, -1],
+                       [1, -2, -1],
+                       [1, 1, -1]],
+                      [[1, -1, -1],
+                       [1, -2, -1],
+                       [1, 1, 1]],
+                      [[-1, -1, -1],
+                       [1, -2, 1],
+                       [1, 1, 1]],
+                      [[-1, -1, 1],
+                       [-1, -2, 1],
+                       [1, 1, 1]],
+                      [[-1, 1, 1],
+                       [-1, -2, 1],
+                       [-1, 1, 1]],
+                      [[1, 1, 1],
+                       [-1, -2, 1],
+                       [-1, -1, 1]]]
+
+    def detect(self, image):
+        """Detects the edge of the object in the image.
+
+        TODO: グレースケール画像だけでなくRGB画像にも対応したい
+        This process can only be done with grayscale images.
+
+        Args:
+            image (ImageProcessing.Image): The input image.
+
+        Returns:
+            ImageProcessing.Image: Returns the output image with the edge detected.
+        """
+        MAX_PIXEL_VALUE = 255
+        output_image = image.copy()
+        output_image[:, :] = MAX_PIXEL_VALUE # TODO: 白画像の生成はImageクラスのコンストラクタでできるようにした方が良い
+
+        for i in range(1, image.height - 1):
+            for j in range(1, image.width - 1):
+                match_list = []
+                for oi in range(0, len(self._opes)):
+                    match_list.append(self._opes[oi][0][0] * image[i - 1, j - 1] + self._opes[oi][0][1] * image[i - 1, j] + self._opes[oi][0][2] * image[i - 1, j + 1]
+                                      + self._opes[oi][1][0] * image[i, j - 1] + self._opes[oi][1][1] * image[i, j] + self._opes[oi][1][2] * image[i, j + 1]
+                                      + self._opes[oi][2][0] * image[i + 1, j - 1] + self._opes[oi][2][1] * image[i + 1, j] + self._opes[oi][2][2] * image[i + 1, j + 1])
+                mathc = float(self._amplifier * max(match_list))
+
+                pixel_value = int(mathc)
+                output_image[i, j] = pixel_value if MAX_PIXEL_VALUE < pixel_value else MAX_PIXEL_VALUE
+
+        return output_image
