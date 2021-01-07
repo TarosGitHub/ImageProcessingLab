@@ -104,11 +104,11 @@ class DifferenceEdgeDetector(GradientEdgeDetector):
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
         self._difference_ope_x = [[0, 0, 0],
-                                    [0, -1, 1],
-                                    [0, 0, 0]]
+                                  [0, -1, 1],
+                                  [0, 0, 0]]
         self._difference_ope_y = [[0, 0, 0],
-                                    [0, -1, 0],
-                                    [0, 1, 0]]
+                                  [0, -1, 0],
+                                  [0, 1, 0]]
         super().__init__(self._difference_ope_x, self._difference_ope_y, amplifier)
 
 class RobertsEdgeDetector(GradientEdgeDetector):
@@ -126,11 +126,11 @@ class RobertsEdgeDetector(GradientEdgeDetector):
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
         self._roberts_ope_x = [[0, 0, 0],
-                                 [0, -1, 0],
-                                 [0, 0, 1]]
+                               [0, -1, 0],
+                               [0, 0, 1]]
         self._roberts_ope_y = [[0, 0, 0],
-                                 [0, 0, -1],
-                                 [0, 1, 0]]
+                               [0, 0, -1],
+                               [0, 1, 0]]
         super().__init__(self._roberts_ope_x, self._roberts_ope_y, amplifier)
 
 class SobelEdgeDetector(GradientEdgeDetector):
@@ -148,11 +148,11 @@ class SobelEdgeDetector(GradientEdgeDetector):
             amplifier (double, optional):　The tone adjustment factor. 0.0 < amplifier.
         """
         self._sobel_ope_x = [[-1, 0, 1],
-                               [-2, 0, 2],
-                               [-1, 0, 1]]
+                             [-2, 0, 2],
+                             [-1, 0, 1]]
         self._sobel_ope_y = [[-1, -2, -1],
-                               [0, 0, 0],
-                               [1, 2, 1]]
+                             [0, 0, 0],
+                             [1, 2, 1]]
         super().__init__(self._sobel_ope_x, self._sobel_ope_y, amplifier)
 
 class TemplateMatchingEdgeDetector(EdgeDetector):
